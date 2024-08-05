@@ -1,20 +1,15 @@
-print("Welcome to the tip calculator!")
-bill = float(input("What was the total bill? $"))
-while True:
-  tip = input("How much tip would you like to give? 10, 12, or 15? ")
-  if tip in ["10", "12", "15"]:
-      tip = int(tip)
-      break
-  else:
-      print("Please enter a valid tip amount (10, 12, or 15).")
-people = int(input("How many people to split the bill?"))
+import streamlit as st
+
+st.title("Tip Calculator")
+
+bill = st.number_input("What was the total bill? $", min_value=0.0, format="%.2f")
+tip = st.selectbox("How much tip would you like to give?", [10, 12, 15])
+people = st.number_input("How many people to split the bill?", min_value=1, format="%d")
 
 tip_as_percent = tip / 100
 total_tip_amount = bill * tip_as_percent
 total_bill = bill + total_tip_amount
 bill_per_person = total_bill / people
-final_amount = "{:.2f}".format(bill_per_person)
 final_amount = round(bill_per_person, 2)
 
-
-print(f"Each person should pay: ${final_amount}")
+st.write(f"Each person should pay: ${final_amount:.2f}")
